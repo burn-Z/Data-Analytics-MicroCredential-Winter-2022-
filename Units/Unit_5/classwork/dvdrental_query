@@ -1,0 +1,25 @@
+SELECT concat(first_name, ' ', last_name) AS full_name,
+email 
+FROM customer
+LIMIT 10;
+
+SELECT DISTINCT rating, rental_rate FROM film
+ORDER BY rating DESC, rental_rate;
+
+SELECT * FROM film
+WHERE rental_rate != .99 AND rating = 'R';
+
+SELECT * FROM film
+WHERE rental_rate = .99 OR rating = 'R';
+
+SELECT * FROM film
+WHERE rating NOT IN ('R', 'G');
+
+SELECT * FROM film
+WHERE description LIKE '%Monk%';
+
+SELECT * FROM film
+WHERE NOT rental_rate BETWEEN .99 AND 3;
+
+SELECT * FROM film
+WHERE title BETWEEN 'a%' AND 't%';

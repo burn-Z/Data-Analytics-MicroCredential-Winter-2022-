@@ -1,0 +1,58 @@
+DROP TABLE IF EXISTS youtube_videos_info;
+
+CREATE TABLE youtube_videos_info
+(
+	ID serial PRIMARY KEY,
+	Title VARCHAR(255) NOT NULL,
+	Length INT NOT NULL,
+	URL VARCHAR(510) UNIQUE NOT NULL
+); 
+
+INSERT INTO youtube_videos_info (Title, Length, URL)
+VALUES
+('These are the asteroids to worry about', 20, 'https://www.youtube.com/watch?v=4Wrc4fHSCpw'),
+('HEYYEYAAEYAAAEYAEYAA', 2, 'https://www.youtube.com/watch?v=ZZ5LpwO-An4&list=LL&index=4'),
+('Apex Legends: Emergence Launch Trailer', 3, 'https://www.youtube.com/watch?v=uQBKoZIYNrs&list=LL&index=5'),
+('Don You Go Rounin Roun to Re Ro - SNL', 2, 'https://www.youtube.com/watch?v=o6p0W4ZsLXw&list=LL&index=8' )
+;
+
+DROP TABLE IF EXISTS reviews;
+
+CREATE TABLE reviews
+(
+	name VARCHAR(255),
+	rating INT,
+	review VARCHAR(255),
+	video_id INT NOT NULL,
+	FOREIGN KEY (video_id)
+		REFERENCES youtube_videos_info(ID)
+);
+
+INSERT INTO reviews (name, rating, review, video_id)
+VALUES
+	('Marson', 5, 'This is the quality content I expect from youtube', 2),
+	('Asher', 4, 'The idea of a kilometres-wide chunk of iron getting so hot that it becomes a liquid is genuinely hard for me to imagine.', 1),
+	('Dimitri', 1, 'Very inappropriate', 4),
+	('Carrot', 3, 'I watched this & still don’t know what his abilities are suppose to be. 😭😭😭', 3),
+	('Creed', 5, 'Amazing details from an expert that even a layman can understand. Thanks Professor.', 1),
+	('John', 5, 'I love to see the space animations. Well done, production team & animators!', 1),
+	('Madz', 5, 'A cinematic masterpiece', 3),
+	('Siobhan', 4, 'The lyrics never get old because we STILL dont know whats going on', 2),
+	('Daniel', 1, 'That was not funny at all', 4),
+	('Sylas', 5, 'This aged so well it turned into cultural heritage of humanity', 2)
+;
+
+DROP TABLE IF EXISTS videos_and_reviews;
+
+CREATE TABLE videos_and_reviews AS
+SELECT 
+	reviews.video_id, youtube_videos_info.Title, youtube_videos_info.Length,
+	youtube_videos_info.URL, reviews.name, reviews.rating, reviews.review
+FROM youtube_videos_info
+FULL OUTER JOIN reviews
+ON youtube_videos_info.ID = reviews.video_id
+;
+
+
+
+
